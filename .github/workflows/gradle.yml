@@ -5,9 +5,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master, development ]
+    branches: [ master, development, actions ]
   pull_request:
-    branches: [ master, development ]
+    branches: [ master, development, actions ]
 
 jobs:
   build:
@@ -26,3 +26,15 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+
+    - uses: actions/upload-artifact@v2
+      name: Upload Common
+      with:
+       name: Common
+       path: common/build/libs/
+
+    - uses: actions/upload-artifact@v2
+      name: Upload Core
+      with:
+       name: Core
+       path: core/build/libs/
