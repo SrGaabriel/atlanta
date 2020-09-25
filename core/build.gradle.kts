@@ -1,5 +1,6 @@
 plugins {
-    kotlin("jvm") apply true
+    kotlin("jvm")
+    kotlin("plugin.serialization") version "1.4.10"
 }
 
 repositories {

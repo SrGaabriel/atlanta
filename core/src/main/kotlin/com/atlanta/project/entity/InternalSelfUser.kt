@@ -1,8 +1,10 @@
 package com.atlanta.project.entity
 
 import com.atlanta.project.AtlantaClient
+import com.atlanta.project.annotations.AtlantaExperimental
 import com.atlanta.project.entity.client.SelfUser
 
+@AtlantaExperimental
 internal class InternalSelfUser(private val client: AtlantaClient): SelfUser {
 
     override val id: Long = TODO("Not yet implemented")
