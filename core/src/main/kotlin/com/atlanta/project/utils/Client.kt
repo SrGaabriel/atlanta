@@ -9,9 +9,11 @@ class ClientBuilder {
     var token: String? = null
 
     fun build(): Client {
-        return AtlantaClient(token ?: throw InvalidClientException("Client's token was not defined."))
+        return AtlantaClient(
+            token = token ?: throw InvalidClientException("Client's token was not defined.")
+        )
     }
 
 }
 
-fun client(builder: ClientBuilder.() -> Unit): Client = ClientBuilder().apply(builder).build()
+fun client(block: ClientBuilder.() -> Unit): Client = ClientBuilder().apply(block).build()
