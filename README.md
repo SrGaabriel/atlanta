@@ -1,4 +1,4 @@
-<img src="logo.png" style="display: block;text-align:center;margin: 0 auto" alt="Logo" />
+<img src=".github/logo.png" style="display: block;text-align:center;margin: 0 auto" alt="Logo" />
 <h1>🌊 Atlanta [WIP]</h1>
 
 <h3>Atlanta is currently under development. Certain features may be missing and/or broken. Use it at your own risk.</h3>
