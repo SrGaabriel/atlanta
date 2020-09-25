@@ -1,0 +1,4 @@
+package mamaco
+
+class Mamaco {
+}

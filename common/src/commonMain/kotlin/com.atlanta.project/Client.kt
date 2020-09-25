@@ -1,9 +1,9 @@
 package com.atlanta.project
 
-import com.atlanta.project.entity.client.SelfClient
+import com.atlanta.project.entity.client.SelfUser
 
 interface Client {
 
-    val self: SelfClient
+    val self: SelfUser
 
 }
