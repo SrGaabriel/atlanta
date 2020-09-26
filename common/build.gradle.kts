@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization") version "1.4.10"
 }
 
 group = "com.atlanta.project"
@@ -39,6 +40,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
             }
         }
         val commonTest by getting {
