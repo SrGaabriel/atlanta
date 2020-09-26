@@ -1,31 +1,30 @@
 package com.atlanta.project.rest.response
 
-import com.atlanta.project.rest.PermissionSet
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+import com.atlanta.project.rest.PermissionSet
+
 @Serializable
 data class ResponseChannel(
     @SerialName("id") val id: Long,
     @SerialName("type") val type: Int,
-    @SerialName("guild_id") val guildId: Long,
-    @SerialName("position") val position: Int,
-    @SerialName("name") val name: String,
-) {
+    @SerialName("guild_id") val guildId: Long? = null,
+    @SerialName("position") val position: Int? = null,
+    @SerialName("permission_overwrites") val permissions: PermissionSet = PermissionSet(0x00000000),
+    @SerialName("name") val name: String? = "",
+    @SerialName("topic") val topic: String? = null,
+    @SerialName("last_message_id") val lastMessage: Long? = null,
+    @SerialName("bitrate") val bitRate: Int? = null,
+    @SerialName("user_limit") val userLimit: Int? = null,
+    @SerialName("rate_limit_per_user") val rateLimitPerUser: Int? = null,
+)
 
-    fun getType(): ResponseChannelEntityType = ResponseChannelEntityType.values().first {
-        it.id == type
-    }
-
-}
-
-@Serializable
+@Serializable(with = ResponseChannelEntityTypeSerializer::class)
 enum class ResponseChannelEntityType(internal val id: Int) {
 
     GUILD_TEXT(0),
@@ -44,7 +43,7 @@ enum class ResponseChannelEntityType(internal val id: Int) {
 
 }
 
-class ResponseChannelEntityTypeSerializer: KSerializer<ResponseChannelEntityType> {
+object ResponseChannelEntityTypeSerializer: KSerializer<ResponseChannelEntityType> {
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 

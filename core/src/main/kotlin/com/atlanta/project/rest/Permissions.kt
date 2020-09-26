@@ -8,7 +8,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable
+@Serializable(with = PermissionSerializer::class)
 data class PermissionSet(val bitMask: Int) {
 
     operator fun plus(value: PermissionSet): PermissionSet = PermissionSet(bitMask or value.bitMask)
@@ -17,9 +17,9 @@ data class PermissionSet(val bitMask: Int) {
 
 }
 
-class PermissionSerializer: KSerializer<PermissionSet> {
+object PermissionSerializer: KSerializer<PermissionSet> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("permissions", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("permission_overwrites", PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): PermissionSet = PermissionSet(decoder.decodeInt())
 
