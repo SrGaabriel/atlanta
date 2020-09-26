@@ -9,6 +9,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation(project(":core"))
+}
+
 kotlin {
     jvm {
         compilations.all {
