@@ -8,4 +8,3 @@ import kotlin.annotation.AnnotationRetention.BINARY
 @RequiresOptIn(level = WARNING)
 @Target(CLASS, PROPERTY, FUNCTION)
 annotation class AtlantaExperimental
-

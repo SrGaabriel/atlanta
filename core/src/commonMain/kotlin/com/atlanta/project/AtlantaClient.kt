@@ -9,4 +9,8 @@ class AtlantaClient(internal val token: String): Client {
     @AtlantaExperimental
     override val self: SelfUser = InternalSelfUser(this)
 
+    fun login() {
+        TODO("Not implemented yet.")
+    }
+
 }

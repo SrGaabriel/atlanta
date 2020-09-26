@@ -6,7 +6,7 @@ plugins {
 allprojects {
     plugins.apply("java")
 
-    group = "com.atlanta.project"
+    group = "project"
     version = "1.0-SNAPSHOT"
 
     repositories {

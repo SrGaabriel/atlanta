@@ -1,5 +1,6 @@
 package com.atlanta.project.rest.response
 
+import com.atlanta.project.rest.Snowflake
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -11,7 +12,7 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class ResponseUser(
-    @SerialName("id") val id: Long,
+    @SerialName("id") val id: Snowflake,
     @SerialName("username") val username: String,
     @SerialName("discriminator") val discriminator: String,
     @SerialName("avatar") val avatar: String?,

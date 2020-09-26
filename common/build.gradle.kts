@@ -3,7 +3,7 @@ plugins {
     kotlin("plugin.serialization") version "1.4.10"
 }
 
-group = "com.atlanta.project"
+group = "project"
 version = "1.0-SNAPSHOT"
 
 repositories {
