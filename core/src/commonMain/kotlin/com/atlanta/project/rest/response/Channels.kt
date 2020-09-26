@@ -19,7 +19,7 @@ data class ResponseChannel(
     @SerialName("type") val type: ResponseChannelEntityType,
     @SerialName("guild_id") val guildId: Snowflake? = null,
     @SerialName("position") val position: Int? = null,
-    @SerialName("permission_overwrites") val permissions: Array<ResponsePermissionOverwrite>? = null,
+    @SerialName("permission_overwrites") val permissions: List<ResponsePermissionOverwrite>? = null,
     @SerialName("name") val name: String? = null,
     @SerialName("topic") val topic: String? = null,
     @SerialName("nsfw") val nsfw: Boolean? = null,
@@ -68,7 +68,7 @@ object ResponseChannelEntityTypeSerializer: KSerializer<ResponseChannelEntityTyp
 data class ResponsePermissionOverwrite(
     @SerialName("id") val id: Long,
     @SerialName("type") val type: String,
-    @SerialName("allow_new") val allowed: PermissionSet,
-    @SerialName("deny_new") val denied: PermissionSet
+    @SerialName("allow") val allowed: PermissionSet,
+    @SerialName("deny") val denied: PermissionSet
 )
 

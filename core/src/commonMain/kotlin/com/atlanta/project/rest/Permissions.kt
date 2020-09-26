@@ -19,7 +19,7 @@ data class PermissionSet(val bitMask: Int) {
 
 object PermissionSerializer: KSerializer<PermissionSet> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("permission_overwrites", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("permission_overwrites", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): PermissionSet = PermissionSet(decoder.decodeInt())
 
