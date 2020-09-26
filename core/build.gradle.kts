@@ -1,5 +1,6 @@
 plugins {
-    kotlin("jvm") apply true
+    kotlin("jvm")
+    kotlin("plugin.serialization") version "1.4.10"
 }
 
 repositories {
@@ -8,5 +9,8 @@ repositories {
 
 dependencies {
     implementation(project(":common"))
+
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.9")
 }
 
