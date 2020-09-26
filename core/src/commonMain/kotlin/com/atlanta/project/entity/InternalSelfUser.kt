@@ -14,4 +14,10 @@ internal class InternalSelfUser(private val client: AtlantaClient): SelfUser {
     override val discriminator: Short
         get() = TODO("Not yet implemented")
 
+    override val avatarHash: String?
+        get() = TODO("Not yet implemented")
+    override val bot: Boolean
+        get() = TODO("Not yet implemented")
+    override val system: Boolean
+        get() = TODO("Not yet implemented")
 }
