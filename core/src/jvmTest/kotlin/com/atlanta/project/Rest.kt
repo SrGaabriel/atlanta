@@ -1,10 +1,10 @@
 package com.atlanta.project
 
-import com.atlanta.project.rest.response.ResponseMember
-import com.atlanta.project.rest.response.ResponseMessage
-import com.atlanta.project.rest.response.ResponseRole
+import com.atlanta.project.rest.DEFAULT_JSON
+import com.atlanta.project.rest.response.RestMember
+import com.atlanta.project.rest.response.RestMessage
+import com.atlanta.project.rest.response.RestRole
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 fun main() {
     role()
@@ -14,7 +14,7 @@ fun main() {
 
 fun member() {
     println(
-        Json.decodeFromString<ResponseMember>("""
+        DEFAULT_JSON.decodeFromString<RestMember>("""
             {
               "nick": "NOT API SUPPORT",
               "roles": [],
@@ -29,7 +29,7 @@ fun member() {
 
 fun role() {
     println(
-        Json.decodeFromString<ResponseRole>("""
+        DEFAULT_JSON.decodeFromString<RestRole>("""
             {
               "id": "41771983423143936",
               "name": "WE DEM BOYZZ!!!!!!",
@@ -47,7 +47,7 @@ fun role() {
 
 fun message() {
     println(
-        Json.decodeFromString<ResponseMessage>("""
+        DEFAULT_JSON.decodeFromString<RestMessage>("""
             {
               "reactions": [
                 {

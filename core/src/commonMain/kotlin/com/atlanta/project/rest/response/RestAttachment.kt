@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseAttachment(
+data class RestAttachment(
     @SerialName("id") val id: Snowflake,
     @SerialName("filename") val fileName: String,
     @SerialName("size") val size: Int,

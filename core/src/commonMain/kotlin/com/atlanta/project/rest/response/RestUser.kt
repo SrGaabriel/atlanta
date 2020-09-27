@@ -11,7 +11,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class ResponseUser(
+data class RestUser(
     @SerialName("id") val id: Snowflake,
     @SerialName("username") val username: String,
     @SerialName("discriminator") val discriminator: String,
@@ -23,12 +23,12 @@ data class ResponseUser(
     @SerialName("verified") val verified: Boolean? = null,
     @SerialName("email") val email: String? = null,
     @SerialName("flags") val flags: Int? = null,
-    @SerialName("premium_type") val premium: PremiumType? = null,
+    @SerialName("premium_type") val premium: RestUserPremiumType? = null,
     @SerialName("public_flags") val publicFlags: Int? = null
 )
 
-@Serializable(with = PremiumTypeSerializer::class)
-enum class PremiumType(val id: Int) {
+@Serializable(with = RestPremiumTypeSerializer::class)
+enum class RestUserPremiumType(val id: Int) {
 
     NONE(0),
     CLASSIC(1),
@@ -36,12 +36,12 @@ enum class PremiumType(val id: Int) {
 
 }
 
-object PremiumTypeSerializer: KSerializer<PremiumType> {
+object RestPremiumTypeSerializer: KSerializer<RestUserPremiumType> {
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("premium_type", PrimitiveKind.INT)
 
-    override fun deserialize(decoder: Decoder): PremiumType = PremiumType.values().first { it.id == decoder.decodeInt() }
+    override fun deserialize(decoder: Decoder): RestUserPremiumType = RestUserPremiumType.values().first { it.id == decoder.decodeInt() }
 
-    override fun serialize(encoder: Encoder, value: PremiumType) = encoder.encodeInt(value.id)
+    override fun serialize(encoder: Encoder, value: RestUserPremiumType) = encoder.encodeInt(value.id)
 
 }

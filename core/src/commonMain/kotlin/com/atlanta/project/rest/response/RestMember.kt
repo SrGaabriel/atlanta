@@ -6,8 +6,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseMember(
-    @SerialName("user") val user: ResponseUser? = null,
+data class RestMember(
+    @SerialName("user") val user: RestUser? = null,
     @SerialName("nick") val nick: String?,
     @SerialName("roles") val roles: List<Snowflake>,
     @SerialName("joined_at") val joinDate: Timestamp,

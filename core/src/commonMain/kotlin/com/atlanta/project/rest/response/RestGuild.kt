@@ -6,13 +6,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseRole(
+data class RestGuild(
     @SerialName("id") val id: Snowflake,
     @SerialName("name") val name: String,
-    @SerialName("color") val color: Int,
-    @SerialName("hoist") val hoist: Boolean,
-    @SerialName("position") val position: Int,
+    @SerialName("icon") val icon: String?,
+    @SerialName("splash") val splash: String?,
+    @SerialName("discovery_splash") val discoverySplash: String?,
+    @SerialName("owner_id") val ownerId: Snowflake,
+    @SerialName("owner") val isOwner: Boolean? = null,
     @SerialName("permissions") val permissions: PermissionSet,
-    @SerialName("managed") val managed: Boolean,
-    @SerialName("mentionable") val mentionable: Boolean
-) { @SerialName("permissions_new") val permissionsText: String = permissions.bitMask.toString() }
+)
