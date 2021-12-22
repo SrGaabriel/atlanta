@@ -65,17 +65,3 @@ enum class Permission(val bitMask: Int) {
     MANAGE_EMOJIS(0x40000000);
 
 }
-
-enum class ChannelType {
-
-    GUILD_TEXT,
-
-    GUILD_NEWS,
-
-    GUILD_STORE,
-
-    PRIVATE_TEXT,
-
-    PRIVATE_GROUP
-
-}

@@ -15,7 +15,7 @@ data class CreateMessageRequest(
     val embeds: List<RestMessageEmbed> = emptyList(),
     @SerialName("allowed_mentions") val allowedMentions: RestMessageAllowedMentions? = null,
     @SerialName("message_reference") val messageReference: RestMessageReference? = null,
-    val components: List<RestMessageComponent>,
-    @SerialName("sticker_id") val stickerIds: List<Snowflake>,
-    val attachments: List<RestAttachment>
+    val components: List<RestMessageComponent>? = null,
+    @SerialName("sticker_id") val stickerIds: List<Snowflake>? = null,
+    val attachments: List<RestAttachment>? = null
 )

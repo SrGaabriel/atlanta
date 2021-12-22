@@ -17,10 +17,11 @@ val DEFAULT_JSON = Json {
 
 @Serializable(with = TimestampSerializer::class)
 data class Timestamp(
-    val iso: String,
-    @Transient val instant: Instant = Instant.parse(iso),
+    val iso: String
+) {
+    @Transient val instant: Instant = Instant.parse(iso)
     @Transient val mills: Long = instant.toEpochMilliseconds()
-)
+}
 
 object TimestampSerializer: KSerializer<Timestamp> {
 

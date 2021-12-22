@@ -50,7 +50,15 @@ enum class RestChannelEntityType(internal val id: Int) {
 
     GUILD_NEWS(5),
 
-    GUILD_STORE(6)
+    GUILD_STORE(6),
+
+    GUILD_NEWS_THREAD(10),
+
+    GUILD_PUBLIC_THREAD(10),
+
+    GUILD_PRIVATE_THREAD(12),
+
+    GUILD_STAGE_VOICE(13)
 
 }
 

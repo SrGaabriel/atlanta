@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":common"))
     implementation("io.ktor:ktor-client-core:${Dependencies.ktorVersion}")
     implementation("io.ktor:ktor-client-cio:${Dependencies.ktorVersion}")
+    implementation("io.ktor:ktor-client-serialization:${Dependencies.ktorVersion}")
 }
 
 tasks.withType<KotlinCompile> {

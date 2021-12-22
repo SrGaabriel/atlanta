@@ -4,7 +4,7 @@ import com.atlanta.project.utils.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetChannelMessages(
+data class GetChannelMessagesRequest(
     val around: Snowflake?,
     val before: Snowflake?,
     val after: Snowflake?,

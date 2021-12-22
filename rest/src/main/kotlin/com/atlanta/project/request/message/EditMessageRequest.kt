@@ -15,7 +15,7 @@ data class EditMessageRequest(
     val content: String? = null,
     val embeds: List<RestMessageEmbed>? = null,
     val flags: Int? = null,
-    @SerialName("allowed_mentions") val allowedMentions: RestMessageAllowedMentions,
+    @SerialName("allowed_mentions") val allowedMentions: RestMessageAllowedMentions? = null,
     val components: List<RestMessageComponent>? = null,
     val attachments: List<RestAttachment>? = null
 )
