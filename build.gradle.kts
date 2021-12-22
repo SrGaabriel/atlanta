@@ -1,18 +1,17 @@
 plugins {
     java
-    kotlin("multiplatform") version "1.4.10"
+    kotlin("multiplatform") version Dependencies.kotlinVersion
 }
 
 allprojects {
     plugins.apply("java")
 
     group = "project"
-    version = "1.0-SNAPSHOT"
+    version = "0.1"
 
     repositories {
         mavenCentral()
     }
-
 }
 
 kotlin {
@@ -37,4 +36,3 @@ kotlin {
         }
     }
 }
-

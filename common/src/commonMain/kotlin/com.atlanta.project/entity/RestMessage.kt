@@ -41,6 +41,22 @@ data class RestMessage(
 )
 
 @Serializable
+data class RestMessageComponent(
+    val type: RestMessageComponentType,
+    @SerialName("custom_id") val customId: String? = null,
+    val disabled: Boolean? = false,
+    val style: Int?,
+    val label: String?,
+    val emoji: RestEmoji?,
+    val url: String?,
+    val options: List<RestMessageSelectOption>? = null,
+    val placeholder: String?,
+    val minimumValues: Int?,
+    val maximumValues: Int?,
+    val children: List<RestMessageComponent> = emptyList()
+)
+
+@Serializable
 data class RestMessageEmbed(
     @SerialName("title") val title: String? = null,
     @SerialName("type") val type: String? = null,
@@ -65,6 +81,23 @@ data class RestMessageReference(
 )
 
 @Serializable
+data class RestMessageAllowedMentions(
+    val parse: List<RestAllowedMentionsType>,
+    val roles: List<Snowflake> = emptyList(),
+    val users: List<RestUser> = emptyList(),
+    val repliedUser: Boolean
+)
+
+@Serializable
+data class RestMessageSelectOption(
+    val label: String,
+    val value: String,
+    val description: String?,
+    val emoji: RestEmoji?,
+    val default: Boolean?
+)
+
+@Serializable(RestMessageFlagSerializer::class)
 enum class RestMessageFlag(val bitMask: Int) {
 
     CROSSPOSTED(1 shl 0),
@@ -111,6 +144,28 @@ enum class RestMessageType(val id: Int) {
     GUILD_DISCOVERY_DISQUALIFIED(14),
 
     GUILD_DISCOVERY_REQUALIFIED(15);
+
+}
+
+@Serializable(RestMessageComponentTypeSerializer::class)
+enum class RestMessageComponentType(val id: Int) {
+
+    ACTION_ROW(1),
+
+    BUTTON(2),
+
+    SELECT_MENU(3)
+
+}
+
+@Serializable(RestAllowedMentionsSerializer::class)
+enum class RestAllowedMentionsType(val value: String) {
+
+    ROLE_MENTIONS("roles"),
+
+    USER_MENTIONS("users"),
+
+    EVERYONE_MENTIONS("everyone")
 
 }
 
@@ -177,4 +232,23 @@ object RestMessageTypeSerializer: KSerializer<RestMessageType> {
 
     override fun serialize(encoder: Encoder, value: RestMessageType) = encoder.encodeInt(value.id)
 
+}
+
+object RestMessageComponentTypeSerializer: KSerializer<RestMessageComponentType> {
+
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+
+    override fun deserialize(decoder: Decoder): RestMessageComponentType = RestMessageComponentType.values().first { it.id == decoder.decodeInt() }
+
+    override fun serialize(encoder: Encoder, value: RestMessageComponentType) = encoder.encodeInt(value.id)
+
+}
+
+object RestAllowedMentionsSerializer: KSerializer<RestAllowedMentionsType> {
+
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+
+    override fun deserialize(decoder: Decoder): RestAllowedMentionsType = RestAllowedMentionsType.values().first { it.value == decoder.decodeString() }
+
+    override fun serialize(encoder: Encoder, value: RestAllowedMentionsType) = encoder.encodeString(value.value)
 }

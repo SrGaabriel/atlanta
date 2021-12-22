@@ -1,4 +1,4 @@
-package com.atlanta.project.request
+package com.atlanta.project.request.channel
 
 import com.atlanta.project.utils.Snowflake
 import kotlinx.serialization.Serializable
