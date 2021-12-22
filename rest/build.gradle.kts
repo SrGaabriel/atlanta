@@ -1,10 +1,15 @@
 plugins {
-    kotlin("multiplatform")
+    kotlin("multiplatform") apply true
     kotlin("plugin.serialization") version "1.4.10"
 }
 
 repositories {
     mavenCentral()
+    maven("https://kotlin.bintray.com/kotlinx")
+}
+
+dependencies {
+    implementation(project(":common"))
 }
 
 kotlin {
@@ -26,9 +31,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
+                implementation(project(":common"))
             }
         }
         val commonTest by getting {
@@ -37,6 +40,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
+
         val jvmMain by getting
         val jvmTest by getting {
             dependencies {
