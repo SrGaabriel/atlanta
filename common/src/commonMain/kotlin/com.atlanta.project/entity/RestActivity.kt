@@ -12,17 +12,17 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class RestActivity(
-    @SerialName("type") val type: RestMessageActivityType,
+    val type: RestMessageActivityType,
     @SerialName("party_id") val partyId: String
 )
 
 @Serializable
 data class RestMessageApplication(
-    @SerialName("id") val id: Snowflake,
+    val id: Snowflake,
     @SerialName("cover_image") val cover: String,
-    @SerialName("description") val description: String,
-    @SerialName("icon") val icon: String?,
-    @SerialName("name") val name: String
+    val description: String,
+    val icon: String?,
+    val name: String
 )
 
 @Serializable(with = RestMessageActivityTypeSerializer::class)

@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RestAttachment(
-    @SerialName("id") val id: Snowflake,
+    val id: Snowflake,
     @SerialName("filename") val fileName: String,
-    @SerialName("size") val size: Int,
-    @SerialName("url") val url: String,
+    val size: Int,
+    val url: String,
     @SerialName("proxy_url") val proxyUrl: String,
-    @SerialName("height") val height: Int? = null,
-    @SerialName("width") val width: Int? = null
+    val height: Int? = null,
+    val width: Int? = null
 )

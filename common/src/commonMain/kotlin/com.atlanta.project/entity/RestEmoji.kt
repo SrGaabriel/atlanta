@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RestEmoji(
-    @SerialName("id") val id: Snowflake?,
-    @SerialName("name") val name: String?,
-    @SerialName("roles") val roles: List<RestRole>? = null,
+    val id: Snowflake?,
+    val name: String?,
+    val roles: List<RestRole>? = null,
     @SerialName("user") val creator: RestUser? = null,
     @SerialName("require_colons") val colons: Boolean? = null,
-    @SerialName("managed") val managed: Boolean? = null,
-    @SerialName("animated") val animated: Boolean? = null,
-    @SerialName("available") val available: Boolean? = null
+    val managed: Boolean? = null,
+    val animated: Boolean? = null,
+    val available: Boolean? = null
 )

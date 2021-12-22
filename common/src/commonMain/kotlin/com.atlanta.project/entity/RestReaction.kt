@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RestReaction(
-    @SerialName("count") val count: Int,
+    val count: Int,
     @SerialName("me") val self: Boolean,
-    @SerialName("emoji") val emoji: RestEmoji
+    val emoji: RestEmoji
 )

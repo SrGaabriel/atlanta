@@ -7,12 +7,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RestRole(
-    @SerialName("id") val id: Snowflake,
-    @SerialName("name") val name: String,
-    @SerialName("color") val color: Int,
-    @SerialName("hoist") val hoist: Boolean,
-    @SerialName("position") val position: Int,
-    @SerialName("permissions") val permissions: PermissionSet,
-    @SerialName("managed") val managed: Boolean,
-    @SerialName("mentionable") val mentionable: Boolean
+    val id: Snowflake,
+    val name: String,
+    val color: Int,
+    val hoist: Boolean,
+    val position: Int,
+    val permissions: PermissionSet,
+    val managed: Boolean,
+    val mentionable: Boolean
 ) { @SerialName("permissions_new") val permissionsText: String = permissions.bitMask.toString() }

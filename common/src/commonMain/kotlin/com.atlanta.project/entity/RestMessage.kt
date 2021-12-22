@@ -14,30 +14,30 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class RestMessage(
-    @SerialName("id") val id: Snowflake,
+    val id: Snowflake,
     @SerialName("channel_id") val channelId: Snowflake,
     @SerialName("guild_id") val guildId: Snowflake? = null,
-    @SerialName("author") val author: RestUser,
-    @SerialName("member") val member: RestMember? = null,
-    @SerialName("content") val content: String? = null,
-    @SerialName("timestamp") val timestamp: Timestamp,
+    val author: RestUser,
+    val member: RestMember? = null,
+    val content: String? = null,
+    val timestamp: Timestamp,
     @SerialName("edited_timestamp") val editTime: Timestamp,
-    @SerialName("tts") val tts: Boolean,
+     val tts: Boolean,
     @SerialName("mention_everyone") val mentionsEveryone: Boolean,
-    @SerialName("mentions") val mentions: List<RestUser>,
+    val mentions: List<RestUser>,
     @SerialName("mention_roles") val mentionRoles: List<Snowflake>,
     @SerialName("mention_channels") val mentionChannels: List<RestChannel>,
-    @SerialName("attachments") val attachments: List<RestAttachment>,
-    @SerialName("embeds") val embeds: List<RestMessageEmbed>,
-    @SerialName("reactions") val reactions: List<RestReaction>,
-    @SerialName("nonce") @Contextual val nonce: Any? = null,
-    @SerialName("pinned") val pinned: Boolean,
+    val attachments: List<RestAttachment>,
+    val embeds: List<RestMessageEmbed>,
+    val reactions: List<RestReaction>,
+    @Contextual val nonce: Any? = null,
+    val pinned: Boolean,
     @SerialName("webhook_id") val webhookId: Snowflake? = null,
-    @SerialName("type") val type: RestMessageType,
-    @SerialName("activity") val activity: RestActivity? = null,
-    @SerialName("application") val application: RestMessageApplication,
+    val type: RestMessageType,
+    val activity: RestActivity? = null,
+    val application: RestMessageApplication,
     @SerialName("message_reference") val reference: RestMessageReference,
-    @SerialName("flags") val flags: List<RestMessageFlag>? = null
+    val flags: List<RestMessageFlag>? = null
 )
 
 @Serializable
@@ -58,19 +58,19 @@ data class RestMessageComponent(
 
 @Serializable
 data class RestMessageEmbed(
-    @SerialName("title") val title: String? = null,
-    @SerialName("type") val type: String? = null,
-    @SerialName("description") val description: String? = null,
-    @SerialName("url") val url: String? = null,
-    @SerialName("timestamp") val timestamp: Timestamp? = null,
-    @SerialName("color") val color: Int? = null,
-    @SerialName("footer") val footer: RestEmbedFooter? = null,
-    @SerialName("image") val image: RestEmbedImage? = null,
-    @SerialName("thumbnail") val thumbnail: RestEmbedImage? = null,
-    @SerialName("video") val video: RestEmbedVideo? = null,
-    @SerialName("provider") val provider: RestEmbedProvider? = null,
-    @SerialName("author") val author: RestEmbedAuthor? = null,
-    @SerialName("fields") val fields: List<RestEmbedField>? = null
+    val title: String? = null,
+    val type: String? = null,
+    val description: String? = null,
+    val url: String? = null,
+    val timestamp: Timestamp? = null,
+    val color: Int? = null,
+    val footer: RestEmbedFooter? = null,
+    val image: RestEmbedImage? = null,
+    val thumbnail: RestEmbedImage? = null,
+    val video: RestEmbedVideo? = null,
+    val provider: RestEmbedProvider? = null,
+    val author: RestEmbedAuthor? = null,
+    val fields: List<RestEmbedField>? = null
 )
 
 @Serializable
@@ -171,46 +171,45 @@ enum class RestAllowedMentionsType(val value: String) {
 
 @Serializable
 data class RestEmbedAuthor(
-    @SerialName("name") val name: String? = null,
-    @SerialName("url") val url: String? = null,
+    val name: String? = null,
+    val url: String? = null,
     @SerialName("icon_url") val iconUrl: String? = null,
-    @SerialName("proxy_icon_url") val proxyUrl: String? = null
+    @SerialName("proxy_icon_url") val proxyIconUrl: String? = null
 )
 
 @Serializable
 data class RestEmbedProvider(
-    @SerialName("name") val name: String? = null,
-    @SerialName("url") val url: String? = null
+    val name: String? = null,
+    val url: String? = null
 )
-
 
 @Serializable
 data class RestEmbedVideo(
-    @SerialName("url") val url: String? = null,
-    @SerialName("height") val height: Int? = null,
-    @SerialName("width") val width: Int? = null
+    val url: String? = null,
+    val height: Int? = null,
+    val width: Int? = null
 )
 
 @Serializable
 data class RestEmbedField(
-    @SerialName("name") val name: String,
-    @SerialName("value") val value: String,
-    @SerialName("inline") val inline: Boolean
+    val name: String,
+    val value: String,
+    val inline: Boolean
 )
 
 @Serializable
 data class RestEmbedImage(
-    @SerialName("url") val url: String? = null,
+    val url: String? = null,
     @SerialName("proxy_url") val proxyUrl: String? = null,
-    @SerialName("height") val height: Int? = null,
-    @SerialName("width") val width: Int? = null
+    val height: Int? = null,
+    val width: Int? = null
 )
 
 @Serializable
 data class RestEmbedFooter(
-    @SerialName("text") val text: String,
+    val text: String,
     @SerialName("icon_url") val iconUrl: String,
-    @SerialName("proxy_icon_url") val proxyUrl: String
+    @SerialName("proxy_icon_url") val proxyIconUrl: String
 )
 
 object RestMessageFlagSerializer: KSerializer<RestMessageFlag> {

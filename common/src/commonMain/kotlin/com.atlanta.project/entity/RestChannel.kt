@@ -15,20 +15,20 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RestChannel(
-    @SerialName("id") val id: Snowflake,
-    @SerialName("type") val type: RestChannelEntityType,
+    val id: Snowflake,
+    val type: RestChannelEntityType,
     @SerialName("guild_id") val guildId: Snowflake? = null,
-    @SerialName("position") val position: Int? = null,
+    val position: Int? = null,
     @SerialName("permission_overwrites") val permissions: List<RestPermissionOverwrite>? = null,
-    @SerialName("name") val name: String? = null,
-    @SerialName("topic") val topic: String? = null,
-    @SerialName("nsfw") val nsfw: Boolean? = null,
+    val name: String? = null,
+    val topic: String? = null,
+    val nsfw: Boolean? = null,
     @SerialName("last_message_id") val lastMessage: Snowflake? = null,
     @SerialName("bitrate") val bitRate: Int? = null,
     @SerialName("user_limit") val userLimit: Int? = null,
-    @SerialName("rate_limit_per_user") val rateLimitPerUser: Int? = null,
-    @SerialName("recipients") val recipients: List<RestUser>? = null,
-    @SerialName("icon") val icon: String? = null,
+    @SerialName("rate_limit_per_user") val slowmode: Int? = null,
+    val recipients: List<RestUser>? = null,
+    val icon: String? = null,
     @SerialName("owner_id") val ownerId: Snowflake? = null,
     @SerialName("application_id") val applicationId: Snowflake? = null,
     @SerialName("parent_id") val parentId: Snowflake? = null,
@@ -74,8 +74,8 @@ object RestChannelEntityTypeSerializer: KSerializer<RestChannelEntityType> {
 
 @Serializable
 data class RestPermissionOverwrite(
-    @SerialName("id") val id: Long,
-    @SerialName("type") val type: String,
-    @SerialName("allow") val allowed: PermissionSet,
-    @SerialName("deny") val denied: PermissionSet
+    val id: Long,
+    val type: String,
+    val allowed: PermissionSet,
+    val denied: PermissionSet
 )

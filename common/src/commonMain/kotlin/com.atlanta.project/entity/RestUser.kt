@@ -12,17 +12,17 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class RestUser(
-    @SerialName("id") val id: Snowflake,
-    @SerialName("username") val username: String,
-    @SerialName("discriminator") val discriminator: String,
-    @SerialName("avatar") val avatar: String?,
-    @SerialName("bot") val isBot: Boolean? = null,
-    @SerialName("system") val isSystem: Boolean? = null,
+    val id: Snowflake,
+    val username: String,
+    val discriminator: String,
+    val avatar: String?,
+    val isBot: Boolean? = null,
+    val isSystem: Boolean? = null,
     @SerialName("mfa_enabled") val isMFAEnabled: Boolean? = null,
-    @SerialName("locale") val locale: String? = null,
-    @SerialName("verified") val verified: Boolean? = null,
-    @SerialName("email") val email: String? = null,
-    @SerialName("flags") val flags: Int? = null,
+    val locale: String? = null,
+    val verified: Boolean? = null,
+    val email: String? = null,
+    val flags: Int? = null,
     @SerialName("premium_type") val premium: RestUserPremiumType? = null,
     @SerialName("public_flags") val publicFlags: Int? = null
 )
