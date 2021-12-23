@@ -4,6 +4,7 @@ import com.atlanta.project.utils.Snowflake
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -12,38 +13,116 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class RestActivity(
-    val type: RestMessageActivityType,
-    @SerialName("party_id") val partyId: String
+    val name: String,
+    val type: RestActivityType,
+    val url: String? = null,
+    @SerialName("created_at") val createdAt: Long,
+    val timestamps: RestActivityTimestamps? = null,
+    @SerialName("application_id") val applicationId: Snowflake? = null,
+    val details: String? = null,
+    val state: String? = null,
+    val emoji: RestEmoji? = null,
+    val party: RestActivityParty? = null,
+    val assets: RestActivityAssets? = null,
+    val secrets: RestActivitySecrets? = null,
+    val instance: Boolean? = null,
+    val flags: RestActivityFlagSet? = null,
+    val buttons: List<RestActivityButton> = emptyList()
 )
 
-@Serializable
-data class RestMessageApplication(
-    val id: Snowflake,
-    @SerialName("cover_image") val cover: String,
-    val description: String,
-    val icon: String?,
-    val name: String
-)
+@Serializable(RestActivityTypeSerializer::class)
+enum class RestActivityType(val id: Int) {
 
-@Serializable(with = RestMessageActivityTypeSerializer::class)
-enum class RestMessageActivityType(val id: Int) {
+    GAME(0),
 
-    JOIN(1),
+    STREAMING(1),
 
-    SPECTATE(2),
+    LISTENING(2),
 
-    LISTEN(3),
+    WATCHING(3),
 
-    JOIN_REQUEST(5)
+    CUSTOM(4),
+
+    COMPETING(5)
 
 }
 
-object RestMessageActivityTypeSerializer: KSerializer<RestMessageActivityType> {
+@Serializable(RestActivityTypeSerializer::class)
+enum class RestActivityFlag(val id: Int) {
+
+    INSTANCE(1 shl 0),
+    JOIN(1 shl 1),
+    SPECTATE(1 shl 2),
+    JOIN_REQUEST(1 shl 3),
+    SYNC(1 shl 4),
+    PLAY(1 shl 5),
+    PARTY_PRIVACY_FRIENDS(1 shl 6),
+    PARTY_PRIVACY_VOICE_CHANNEL(1 shl 7),
+    EMBEDDED(1 shl 8),
+
+}
+
+@Serializable
+data class RestActivityTimestamps(
+    val start: Long? = null,
+    val end: Long? = null
+)
+
+@Serializable
+data class RestActivityParty(
+    val id: String?,
+    val size: List<Int>
+) {
+    @Transient val currentSize = size[0]
+    @Transient val maximumSize = size[1]
+}
+
+@Serializable
+data class RestActivityAssets(
+    @SerialName("large_image") val largeImage: String? = null,
+    @SerialName("large_text") val largeText: String? = null,
+    @SerialName("small_image") val smallImage: String? = null,
+    @SerialName("small_text") val smallText: String? = null,
+)
+
+@Serializable
+data class RestActivitySecrets(
+    val join: String? = null,
+    val spectate: String? = null,
+    val match: String? = null
+)
+
+@Serializable
+data class RestActivityButton(
+    val label: String,
+    val url: String
+)
+
+@Serializable(with = RestActivityFlagSerializer::class)
+data class RestActivityFlagSet(val bitMask: Int) {
+
+    operator fun plus(value: RestActivityFlagSet): RestActivityFlagSet = RestActivityFlagSet(bitMask or value.bitMask)
+
+    operator fun minus(value: RestActivityFlagSet) = RestActivityFlagSet(bitMask and value.bitMask.inv())
+
+}
+
+object RestActivityTypeSerializer: KSerializer<RestActivityType> {
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("", PrimitiveKind.INT)
 
-    override fun deserialize(decoder: Decoder): RestMessageActivityType = RestMessageActivityType.values().first { it.id == decoder.decodeInt() }
+    override fun deserialize(decoder: Decoder): RestActivityType = RestActivityType.values().first { it.id == decoder.decodeInt() }
 
-    override fun serialize(encoder: Encoder, value: RestMessageActivityType) = encoder.encodeInt(value.id)
+    override fun serialize(encoder: Encoder, value: RestActivityType) = encoder.encodeInt(value.id)
+
+}
+
+object RestActivityFlagSerializer: KSerializer<RestActivityFlagSet> {
+
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestActivityFlagSerializer", PrimitiveKind.INT)
+
+    override fun deserialize(decoder: Decoder): RestActivityFlagSet = RestActivityFlagSet(decoder.decodeInt())
+
+    override fun serialize(encoder: Encoder, value: RestActivityFlagSet) = encoder.encodeInt(value.bitMask)
 
 }

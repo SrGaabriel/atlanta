@@ -19,20 +19,28 @@ data class RestChannel(
     val type: RestChannelEntityType,
     @SerialName("guild_id") val guildId: Snowflake? = null,
     val position: Int? = null,
-    @SerialName("permission_overwrites") val permissions: List<RestPermissionOverwrite>? = null,
+    @SerialName("permission_overwrites") val permissionsOverwrites: List<RestPermissionOverwrite>? = null,
     val name: String? = null,
     val topic: String? = null,
     val nsfw: Boolean? = null,
-    @SerialName("last_message_id") val lastMessage: Snowflake? = null,
     @SerialName("bitrate") val bitRate: Int? = null,
+    @SerialName("last_message_id") val lastMessage: Snowflake? = null,
     @SerialName("user_limit") val userLimit: Int? = null,
-    @SerialName("rate_limit_per_user") val slowmode: Int? = null,
+    @SerialName("rate_limit_per_user") val rateLimitPerUser: Int? = null,
     val recipients: List<RestUser>? = null,
     val icon: String? = null,
     @SerialName("owner_id") val ownerId: Snowflake? = null,
     @SerialName("application_id") val applicationId: Snowflake? = null,
     @SerialName("parent_id") val parentId: Snowflake? = null,
-    @SerialName("last_pin_timestamp") val lastPinTimestamp: Long? = null
+    @SerialName("last_pin_timestamp") val lastPinTimestamp: Long? = null,
+    @SerialName("rtc_region") val rtcRegion: String? = null,
+    @SerialName("video_quality_mode") val videoQualityMode: Int? = null,
+    @SerialName("message_count") val messageCount: Int? = null,
+    @SerialName("member_count") val memberCount: Int? = null,
+    @SerialName("thread_metadata") val threadMetadata: RestThreadMetadata? = null,
+    val member: RestThreadMember? = null,
+    @SerialName("default_auto_archive_duration") val defaultAutoArchiveDuration: Int? = null,
+    @SerialName("permissions") val slashCommandsPermissionSet: PermissionSet? = null
 )
 
 @Serializable(with = RestChannelEntityTypeSerializer::class)

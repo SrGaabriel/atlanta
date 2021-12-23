@@ -22,7 +22,7 @@ data class RestMessage(
     val content: String? = null,
     val timestamp: Timestamp,
     @SerialName("edited_timestamp") val editTime: Timestamp,
-     val tts: Boolean,
+    val tts: Boolean,
     @SerialName("mention_everyone") val mentionsEveryone: Boolean,
     val mentions: List<RestUser>,
     @SerialName("mention_roles") val mentionRoles: List<Snowflake>,
@@ -34,10 +34,29 @@ data class RestMessage(
     val pinned: Boolean,
     @SerialName("webhook_id") val webhookId: Snowflake? = null,
     val type: RestMessageType,
-    val activity: RestActivity? = null,
+    val activity: RestMessageActivity? = null,
     val application: RestMessageApplication,
     @SerialName("message_reference") val reference: RestMessageReference,
-    val flags: List<RestMessageFlag>? = null
+    val flags: List<RestMessageFlag>? = null,
+    val thread: RestChannel? = null,
+    val components: List<RestMessageComponent> = emptyList(),
+    @SerialName("sticker_items") val stickerItems: List<RestStickerItem> = emptyList(),
+    @Deprecated("Replace with stickerItems") val stickers: List<RestSticker> = emptyList()
+)
+
+@Serializable
+data class RestMessageActivity(
+    val type: RestMessageActivityType,
+    @SerialName("party_id") val partyId: String
+)
+
+@Serializable
+data class RestMessageApplication(
+    val id: Snowflake,
+    @SerialName("cover_image") val cover: String,
+    val description: String,
+    val icon: String?,
+    val name: String
 )
 
 @Serializable
@@ -96,6 +115,19 @@ data class RestMessageSelectOption(
     val emoji: RestEmoji?,
     val default: Boolean?
 )
+
+@Serializable(RestMessageActivityTypeSerializer::class)
+enum class RestMessageActivityType(val id: Int) {
+
+    JOIN(1),
+
+    SPECTATE(2),
+
+    LISTEN(3),
+
+    JOIN_REQUEST(5)
+
+}
 
 @Serializable(RestMessageFlagSerializer::class)
 enum class RestMessageFlag(val bitMask: Int) {
@@ -212,20 +244,29 @@ data class RestEmbedFooter(
     @SerialName("proxy_icon_url") val proxyIconUrl: String
 )
 
+object RestMessageActivityTypeSerializer: KSerializer<RestMessageActivityType> {
+
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("", PrimitiveKind.INT)
+
+    override fun deserialize(decoder: Decoder): RestMessageActivityType = RestMessageActivityType.values().first { it.id == decoder.decodeInt() }
+
+    override fun serialize(encoder: Encoder, value: RestMessageActivityType) = encoder.encodeInt(value.id)
+
+}
+
 object RestMessageFlagSerializer: KSerializer<RestMessageFlag> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestMessageFlagSerializer", PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): RestMessageFlag = RestMessageFlag.values().first { it.bitMask == decoder.decodeInt() }
 
     override fun serialize(encoder: Encoder, value: RestMessageFlag) = encoder.encodeInt(value.bitMask)
 
-
 }
 
 object RestMessageTypeSerializer: KSerializer<RestMessageType> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestMessageTypeSerializer", PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): RestMessageType = RestMessageType.values().first { it.id == decoder.decodeInt() }
 
@@ -235,7 +276,7 @@ object RestMessageTypeSerializer: KSerializer<RestMessageType> {
 
 object RestMessageComponentTypeSerializer: KSerializer<RestMessageComponentType> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestMessageComponentTypeSerializer", PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): RestMessageComponentType = RestMessageComponentType.values().first { it.id == decoder.decodeInt() }
 
@@ -245,7 +286,7 @@ object RestMessageComponentTypeSerializer: KSerializer<RestMessageComponentType>
 
 object RestAllowedMentionsSerializer: KSerializer<RestAllowedMentionsType> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestAllowedMentionsSerializer", PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): RestAllowedMentionsType = RestAllowedMentionsType.values().first { it.value == decoder.decodeString() }
 
