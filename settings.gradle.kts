@@ -1,4 +1,4 @@
 
 rootProject.name = "atlanta"
 include("common")
-include("core")
+include("rest")

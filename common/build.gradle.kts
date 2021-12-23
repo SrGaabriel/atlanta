@@ -1,14 +1,10 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("plugin.serialization") version Dependencies.kotlinVersion
 }
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    implementation(project(":core"))
 }
 
 kotlin {
@@ -32,6 +28,7 @@ kotlin {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
                 api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
             }
         }
         val commonTest by getting {
