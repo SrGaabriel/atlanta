@@ -166,8 +166,7 @@ enum class RestGuildFeature {
     WELCOME_SCREEN_ENABLED
 }
 
-@Serializable(RestSystemChannelFlagSerializer::class)
-enum class RestSystemChannelFlag(val bitMask: Int) {
+enum class RestSystemChannelFlag(val bits: Int) {
 
     SUPPRESS_JOIN_NOTIFICATIONS(1 shl 0),
 
@@ -177,9 +176,17 @@ enum class RestSystemChannelFlag(val bitMask: Int) {
 
     SUPPRESS_JOIN_NOTIFICATION_REPLIES(1 shl 3);
 
-    companion object: DefaultIntIdEnumSerializationStrategy<RestSystemChannelFlag>(values().associateBy { it.bitMask })
 }
-object RestSystemChannelFlagSerializer: IntIdSerializer<RestSystemChannelFlag>(RestSystemChannelFlag::class, RestSystemChannelFlag)
+
+@Serializable(with = RestSystemChannelFlagSet.Serializer::class)
+data class RestSystemChannelFlagSet(override val bitMask: Int): BitmaskHolder<RestSystemChannelFlagSet> {
+
+    operator fun plus(value: RestActivityFlagSet): RestSystemChannelFlagSet = RestSystemChannelFlagSet(bitMask or value.bitMask)
+
+    operator fun minus(value: RestActivityFlagSet) = RestActivityFlagSet(bitMask and value.bitMask.inv())
+
+    companion object Serializer: BitmaskSerializer<RestSystemChannelFlagSet>({bitmask -> RestSystemChannelFlagSet(bitmask)})
+}
 
 @Serializable(RestGuildPremiumTierSerializer::class)
 enum class RestGuildPremiumTier(val value: Int) {

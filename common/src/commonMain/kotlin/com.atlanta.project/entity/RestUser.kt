@@ -1,7 +1,6 @@
 package com.atlanta.project.entity
 
-import com.atlanta.project.utils.DefaultIntIdEnumSerializationStrategy
-import com.atlanta.project.utils.Snowflake
+import com.atlanta.project.utils.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -47,13 +46,14 @@ enum class RestUserFlag(val bitMask: Int) {
     BOT_HTTP_INTERACTIONS(1 shl 19)
 }
 
-@Serializable(with = RestUserFlagsSerializer::class)
-data class RestUserFlags(val bitMask: Int) {
+@Serializable(with = RestUserFlags.Serializer::class)
+data class RestUserFlags(override val bitMask: Int): BitmaskHolder<RestUserFlags> {
 
     operator fun plus(value: RestUserFlags): RestUserFlags = RestUserFlags(bitMask or value.bitMask)
 
     operator fun minus(value: RestUserFlags) = RestUserFlags(bitMask and value.bitMask.inv())
 
+    companion object Serializer: BitmaskSerializer<RestUserFlags>({bitmask -> RestUserFlags(bitmask)})
 }
 
 @Serializable(with = RestPremiumTypeSerializer::class)
@@ -61,9 +61,11 @@ enum class RestUserPremiumType(val id: Int) {
 
     NONE(0),
     CLASSIC(1),
-    GAMER(2)
+    GAMER(2);
 
+    companion object: DefaultIntIdEnumSerializationStrategy<RestUserPremiumType>(values().associateBy { it.id })
 }
+object RestPremiumTypeSerializer: IntIdSerializer<RestUserPremiumType>(RestUserPremiumType::class, RestUserPremiumType)
 
 @Serializable
 data class RestClientStatus(
@@ -71,23 +73,3 @@ data class RestClientStatus(
     val mobile: String? = null,
     val web: String? = null
 )
-
-object RestPremiumTypeSerializer: KSerializer<RestUserPremiumType> {
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestUserPremiumType", PrimitiveKind.INT)
-
-    override fun deserialize(decoder: Decoder): RestUserPremiumType = RestUserPremiumType.values().first { it.id == decoder.decodeInt() }
-
-    override fun serialize(encoder: Encoder, value: RestUserPremiumType) = encoder.encodeInt(value.id)
-
-}
-
-object RestUserFlagsSerializer: KSerializer<RestUserFlags> {
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("permission_overwrites", PrimitiveKind.STRING)
-
-    override fun deserialize(decoder: Decoder): RestUserFlags = RestUserFlags(decoder.decodeInt())
-
-    override fun serialize(encoder: Encoder, value: RestUserFlags) = encoder.encodeInt(value.bitMask)
-
-}

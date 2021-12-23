@@ -1,6 +1,6 @@
 package com.atlanta.project.entity
 
-import com.atlanta.project.utils.Snowflake
+import com.atlanta.project.utils.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -43,11 +43,12 @@ enum class RestActivityType(val id: Int) {
 
     CUSTOM(4),
 
-    COMPETING(5)
+    COMPETING(5);
 
+    companion object: DefaultIntIdEnumSerializationStrategy<RestActivityType>(values().associateBy { it.id })
 }
+object RestActivityTypeSerializer: IntIdSerializer<RestActivityType>(RestActivityType::class, RestActivityType)
 
-@Serializable(RestActivityTypeSerializer::class)
 enum class RestActivityFlag(val id: Int) {
 
     INSTANCE(1 shl 0),
@@ -98,31 +99,12 @@ data class RestActivityButton(
     val url: String
 )
 
-@Serializable(with = RestActivityFlagSerializer::class)
-data class RestActivityFlagSet(val bitMask: Int) {
+@Serializable(with = RestActivityFlagSet.Serializer::class)
+data class RestActivityFlagSet(override val bitMask: Int): BitmaskHolder<RestActivityFlagSet> {
 
     operator fun plus(value: RestActivityFlagSet): RestActivityFlagSet = RestActivityFlagSet(bitMask or value.bitMask)
 
     operator fun minus(value: RestActivityFlagSet) = RestActivityFlagSet(bitMask and value.bitMask.inv())
 
-}
-
-object RestActivityTypeSerializer: KSerializer<RestActivityType> {
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("", PrimitiveKind.INT)
-
-    override fun deserialize(decoder: Decoder): RestActivityType = RestActivityType.values().first { it.id == decoder.decodeInt() }
-
-    override fun serialize(encoder: Encoder, value: RestActivityType) = encoder.encodeInt(value.id)
-
-}
-
-object RestActivityFlagSerializer: KSerializer<RestActivityFlagSet> {
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("RestActivityFlagSerializer", PrimitiveKind.INT)
-
-    override fun deserialize(decoder: Decoder): RestActivityFlagSet = RestActivityFlagSet(decoder.decodeInt())
-
-    override fun serialize(encoder: Encoder, value: RestActivityFlagSet) = encoder.encodeInt(value.bitMask)
-
+    companion object Serializer: BitmaskSerializer<RestActivityFlagSet>({bitmask -> RestActivityFlagSet(bitmask)})
 }

@@ -1,5 +1,7 @@
 package com.atlanta.project.entity
 
+import com.atlanta.project.utils.DefaultIntIdEnumSerializationStrategy
+import com.atlanta.project.utils.IntIdSerializer
 import com.atlanta.project.utils.PermissionSet
 import com.atlanta.project.utils.Snowflake
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -66,19 +68,11 @@ enum class RestChannelEntityType(internal val id: Int) {
 
     GUILD_PRIVATE_THREAD(12),
 
-    GUILD_STAGE_VOICE(13)
+    GUILD_STAGE_VOICE(13);
 
+    companion object: DefaultIntIdEnumSerializationStrategy<RestChannelEntityType>(values().associateBy { it.id })
 }
-
-object RestChannelEntityTypeSerializer: KSerializer<RestChannelEntityType> {
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-    override fun deserialize(decoder: Decoder): RestChannelEntityType = RestChannelEntityType.values().first { it.id == decoder.decodeInt() }
-
-    override fun serialize(encoder: Encoder, value: RestChannelEntityType) = encoder.encodeInt(value.id)
-
-}
+object RestChannelEntityTypeSerializer: IntIdSerializer<RestChannelEntityType>(RestChannelEntityType::class, RestChannelEntityType)
 
 @Serializable
 data class RestPermissionOverwrite(
